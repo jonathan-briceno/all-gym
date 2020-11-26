@@ -1,0 +1,83 @@
+
+import React, { Component } from 'react';
+import { ScrollView,View, StyleSheet, Button , TouchableHighlight, Text} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import t from 'tcomb-form-native'; // 0.6.9
+
+
+const Form = t.form.Form;
+const Stack = createStackNavigator();
+
+const Videos = [
+  {
+    Videourl: 'https://www.youtube.com/watch?v=5qo70Fgq4mw',
+  },
+  {
+    Videourl: 'https://www.youtube.com/watch?v=XIU3xE3T5H4',
+  },
+  {
+    Videourl: 'https://www.youtube.com/watch?v=OP9w1b1-B4g',
+  },
+];
+
+
+const User = t.struct({
+  Edad: t.String,
+  peso: t.String,
+  "tomas alguna dieta?": t.Boolean,
+  cintura: t.String,
+  pecho: t.String,
+  abdomen: t.String,
+  estatura: t.String 
+});
+
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        title="Ingresa tus datos"
+        onPress={() => navigation.navigate('All Gym - Datos')}
+      />
+    </View>
+  );
+}
+
+function GymForm() {
+  return (
+    <ScrollView style={styles.scrollView}>
+     <View style={styles.container}>
+      <Form 
+        type={User} 
+      />
+      <Button
+        title="Finalizar"
+        onPress={() => navigation.navigate('All Gym - Rutina')}
+      />
+    </View>
+  </ScrollView>
+  );
+}
+
+
+export default class App extends Component {
+  render() {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="All Gym - Inicio" component={HomeScreen} />
+          <Stack.Screen name="All Gym - Datos" component={GymForm} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: '#ffffff',
+  },
+});
